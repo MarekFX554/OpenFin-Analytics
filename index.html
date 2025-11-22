@@ -1,57 +1,607 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenFin Analytics | Free Educational Trading Platform</title>
+    <title>OpenFin Analytics | Professional Trading Education</title>
+    
+    <!-- Google Fonts: Inter for that clean FinTech look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (via CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        fin: {
+                            base: '#020617',    /* Deepest Navy */
+                            surface: '#0f172a', /* Slate surface */
+                            light: '#1e293b',   /* Card bg */
+                            text: '#f8fafc',    /* White text */
+                            mute: '#94a3b8',    /* Muted text */
+                            accent: '#10b981',  /* Emerald Green */
+                            accentHover: '#059669',
+                            border: '#334155'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; }
-        header { background-color: #2c3e50; color: white; padding: 20px 0; text-align: center; }
-        .container { max-width: 960px; margin: 0 auto; padding: 40px 20px; text-align: center; }
-        h1 { margin: 0; font-size: 2.5rem; }
-        p.subtitle { font-size: 1.2rem; color: #bdc3c7; margin-top: 10px; }
-        .hero { background: white; padding: 60px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 30px; }
-        .hero h2 { color: #2c3e50; font-size: 2rem; margin-bottom: 20px; }
-        .btn { display: inline-block; background-color: #27ae60; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; }
-        .features { display: flex; justify-content: space-around; margin-top: 50px; flex-wrap: wrap; }
-        .feature-box { background: white; padding: 20px; width: 30%; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-radius: 5px; margin-bottom: 20px; }
-        footer { margin-top: 50px; text-align: center; font-size: 0.9rem; color: #7f8c8d; }
+        /* Custom Utilities */
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Grid Background Overlay */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(30, 41, 59, 0.3) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: #10b981;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.15);
+        }
+
+        /* Text Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #f8fafc, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-accent {
+            background: linear-gradient(to right, #34d399, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Canvas z-index */
+        #chartCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #10b981;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 16px;
+            position: fixed;
+            z-index: 50;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-weight: 500;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
     </style>
 </head>
-<body>
+<body class="antialiased selection:bg-fin-accent selection:text-fin-base">
 
-<header>
-    <h1>OpenFin Analytics</h1>
-    <p class="subtitle">Democratizing Financial Education for the World</p>
-</header>
+    <!-- Background Animation Canvas -->
+    <canvas id="chartCanvas"></canvas>
+    <div class="fixed inset-0 bg-grid pointer-events-none z-[-1]"></div>
+    <div class="fixed inset-0 bg-gradient-to-b from-transparent via-fin-base/80 to-fin-base pointer-events-none z-[-1]"></div>
 
-<div class="container">
-    <div class="hero">
-        <h2>Master Smart Money Concepts (SMC) Risk-Free</h2>
-        <p>We are building the world's first 100% free, non-commercial backtesting environment designed specifically for students and aspiring traders.</p>
-        <p>Experience professional-grade charting without the barrier of entry.</p>
-        <a href="#" class="btn">Platform Launching Soon</a>
-    </div>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 top-0 left-0 border-b border-fin-border/30 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-fin-base font-bold text-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-white">OpenFin <span class="text-fin-accent font-medium">Analytics</span></span>
+                </div>
+                
+                <!-- Desktop Nav Items -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#mission" class="text-sm font-medium text-fin-mute hover:text-white transition-colors">Mission</a>
+                    <a href="#features" class="text-sm font-medium text-fin-mute hover:text-white transition-colors">Technology</a>
+                    <a href="#" class="text-sm font-medium text-fin-mute hover:text-white transition-colors">Community</a>
+                </div>
 
-    <div class="features">
-        <div class="feature-box">
-            <h3>Free Education</h3>
-            <p>Accessible learning resources for everyone, regardless of financial status.</p>
+                <!-- CTA Mini -->
+                <div class="hidden md:block">
+                    <button onclick="copyToClipboard()" class="text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded border border-fin-border hover:border-fin-accent text-fin-mute hover:text-fin-accent transition-all duration-300">
+                        Join Beta
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="feature-box">
-            <h3>Advanced Charts</h3>
-            <p>Powered by industry-leading technology to simulate real market conditions.</p>
-        </div>
-        <div class="feature-box">
-            <h3>Community Driven</h3>
-            <p>Open-source philosophy focused on knowledge sharing, not profit.</p>
-        </div>
-    </div>
+    </nav>
 
-    <footer>
-        <p>&copy; 2025 OpenFin Analytics. A Non-Commercial Educational Project.</p>
-    </footer>
-</div>
+    <!-- Main Content Wrapper -->
+    <main class="relative pt-20">
+        
+        <!-- Hero Section -->
+        <section class="relative min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+            <!-- Glow Effect behind text -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-900/20 rounded-full blur-[100px] pointer-events-none"></div>
+            
+            <div class="max-w-5xl mx-auto text-center relative z-10 animate-fade-up">
+                <div class="inline-flex items-center px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-medium mb-6 backdrop-blur-sm">
+                    <span class="flex h-2 w-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
+                    Non-Profit Educational Initiative
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
+                    Democratizing <br/>
+                    <span class="text-gradient-accent">Professional Trading</span> Education
+                </h1>
+                
+                <p class="mt-4 text-xl text-fin-mute max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                    A 100% free, non-commercial sandbox for mastering Smart Money Concepts. 
+                    Backtest institutional strategies in a risk-free environment.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button onclick="showToast()" class="group relative px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg shadow-lg shadow-emerald-500/20 transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
+                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></div>
+                        <span class="relative flex items-center gap-2">
+                            Platform Launching Soon
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </span>
+                    </button>
+                    
+                    <button onclick="scrollToMission()" class="px-8 py-4 bg-transparent border border-fin-border text-fin-mute hover:text-white hover:border-white rounded-lg transition-all duration-300 font-medium">
+                        Learn About Our Mission
+                    </button>
+                </div>
 
+                <!-- Detailed Terminal UI Preview Mockup -->
+                <div class="mt-16 relative mx-auto max-w-5xl border border-fin-border/60 rounded-xl bg-fin-surface/90 backdrop-blur-xl shadow-2xl overflow-hidden opacity-90 animate-float ring-1 ring-white/5">
+                    
+                    <!-- Window Controls & Header -->
+                    <div class="h-9 bg-fin-base/80 border-b border-fin-border/60 flex items-center px-4 justify-between select-none">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-400 transition-colors"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-400 transition-colors"></div>
+                            <div class="w-3 h-3 rounded-full bg-emerald-500/80 hover:bg-emerald-400 transition-colors"></div>
+                        </div>
+                        <div class="text-[10px] tracking-widest text-fin-mute font-mono uppercase opacity-50 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            OpenFin Terminal v1.0.4
+                        </div>
+                    </div>
+
+                    <!-- Main Interface Body -->
+                    <div class="flex h-[400px] md:h-[450px]">
+                        
+                        <!-- Sidebar -->
+                        <div class="w-14 border-r border-fin-border/60 flex flex-col items-center py-5 gap-6 bg-fin-base/40">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 cursor-pointer hover:bg-emerald-500/20 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                            </div>
+                            <div class="w-8 h-8 rounded-lg bg-fin-light/30 flex items-center justify-center text-fin-mute hover:text-white cursor-pointer hover:bg-fin-light/50 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            </div>
+                            <div class="w-8 h-8 rounded-lg bg-fin-light/30 flex items-center justify-center text-fin-mute hover:text-white cursor-pointer hover:bg-fin-light/50 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                            </div>
+                            <div class="mt-auto mb-2 w-8 h-8 rounded-full bg-fin-light/20 flex items-center justify-center text-fin-mute hover:text-white">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div class="flex-1 flex flex-col min-w-0">
+                            <!-- Top Ticker Bar -->
+                            <div class="h-14 border-b border-fin-border/60 flex items-center justify-between px-6 bg-fin-base/20">
+                                <div class="flex items-center gap-6">
+                                    <div class="flex flex-col">
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-bold text-white tracking-wide">BTC/USD</span>
+                                            <span class="text-[10px] px-1.5 py-0.5 rounded bg-fin-light text-fin-mute border border-fin-border/50">PERP</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs">
+                                            <span class="text-emerald-400 font-mono font-medium">$42,389.00</span>
+                                            <span class="text-emerald-500/80 text-[10px]">+2.45%</span>
+                                        </div>
+                                    </div>
+                                    <div class="hidden sm:flex h-8 w-px bg-fin-border/60"></div>
+                                    <div class="hidden sm:flex flex-col">
+                                        <span class="text-[10px] text-fin-mute uppercase tracking-wider">24h Vol</span>
+                                        <span class="text-xs text-white font-mono">1.2B</span>
+                                    </div>
+                                    <div class="hidden sm:flex flex-col">
+                                        <span class="text-[10px] text-fin-mute uppercase tracking-wider">Funding</span>
+                                        <span class="text-xs text-emerald-400 font-mono">0.0100%</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center bg-fin-base/60 rounded-lg p-1 border border-fin-border/50">
+                                    <button class="px-3 py-1 text-xs text-fin-mute hover:text-white transition-colors">1H</button>
+                                    <button class="px-3 py-1 text-xs text-white bg-fin-light rounded shadow-sm border border-fin-border/50">4H</button>
+                                    <button class="px-3 py-1 text-xs text-fin-mute hover:text-white transition-colors">D</button>
+                                </div>
+                            </div>
+
+                            <div class="flex-1 flex min-h-0">
+                                <!-- Chart Area -->
+                                <div class="flex-1 relative bg-gradient-to-b from-transparent to-fin-base/30">
+                                    <!-- Grid Background -->
+                                    <div class="absolute inset-0 z-0 opacity-20" 
+                                         style="background-image: linear-gradient(rgba(51, 65, 85, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(51, 65, 85, 0.5) 1px, transparent 1px); background-size: 40px 40px;">
+                                    </div>
+
+                                    <!-- Chart SVG -->
+                                    <svg class="absolute inset-0 w-full h-full z-10 p-4" viewBox="0 0 800 400" preserveAspectRatio="none">
+                                        <defs>
+                                            <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#10b981" stop-opacity="0.25"/>
+                                                <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+                                            </linearGradient>
+                                            <filter id="glow">
+                                                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                                                <feMerge>
+                                                    <feMergeNode in="coloredBlur"/>
+                                                    <feMergeNode in="SourceGraphic"/>
+                                                </feMerge>
+                                            </filter>
+                                        </defs>
+                                        <!-- Area Fill -->
+                                        <path d="M0 350 L 0 250 Q 100 280, 200 200 T 400 150 T 600 100 T 800 50 V 400 H 0 Z" fill="url(#chartFill)" stroke="none"/>
+                                        <!-- Line -->
+                                        <path d="M0 250 Q 100 280, 200 200 T 400 150 T 600 100 T 800 50" fill="none" stroke="#10b981" stroke-width="2" filter="url(#glow)"/>
+                                        
+                                        <!-- Price Point Indicator -->
+                                        <circle cx="800" cy="50" r="4" fill="#10b981" class="animate-pulse"/>
+                                        <line x1="0" y1="50" x2="800" y2="50" stroke="#10b981" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.3"/>
+                                    </svg>
+
+                                    <!-- Floating Info Badge inside chart -->
+                                    <div class="absolute top-6 left-6 z-20 bg-fin-base/90 border border-fin-border/60 p-3 rounded-lg backdrop-blur-md shadow-xl">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                            <span class="text-[10px] text-fin-mute uppercase font-semibold">Long Position</span>
+                                        </div>
+                                        <div class="text-lg font-bold text-white font-mono">Entry: $41,200</div>
+                                        <div class="text-xs text-emerald-400 font-mono">PnL: +$1,189.00</div>
+                                    </div>
+                                </div>
+
+                                <!-- Order Book / Right Panel -->
+                                <div class="w-72 border-l border-fin-border/60 bg-fin-base/40 hidden lg:flex flex-col">
+                                    <!-- Order Book Header -->
+                                    <div class="p-3 border-b border-fin-border/60 flex justify-between text-[10px] text-fin-mute uppercase font-semibold">
+                                        <span>Price (USD)</span>
+                                        <span>Size</span>
+                                    </div>
+                                    
+                                    <!-- Asks (Sells) -->
+                                    <div class="flex-1 overflow-hidden p-2 space-y-1">
+                                        <div class="flex justify-between text-xs font-mono relative">
+                                            <div class="absolute inset-0 bg-red-500/10 w-[30%] ml-auto rounded-sm"></div>
+                                            <span class="text-red-400 relative z-10">42,395.50</span>
+                                            <span class="text-fin-mute relative z-10">0.45</span>
+                                        </div>
+                                        <div class="flex justify-between text-xs font-mono relative">
+                                            <div class="absolute inset-0 bg-red-500/10 w-[60%] ml-auto rounded-sm"></div>
+                                            <span class="text-red-400 relative z-10">42,394.00</span>
+                                            <span class="text-fin-mute relative z-10">1.20</span>
+                                        </div>
+                                        <div class="flex justify-between text-xs font-mono relative">
+                                            <div class="absolute inset-0 bg-red-500/10 w-[20%] ml-auto rounded-sm"></div>
+                                            <span class="text-red-400 relative z-10">42,392.50</span>
+                                            <span class="text-fin-mute relative z-10">0.15</span>
+                                        </div>
+                                        <div class="flex justify-between text-xs font-mono relative">
+                                            <div class="absolute inset-0 bg-red-500/10 w-[45%] ml-auto rounded-sm"></div>
+                                            <span class="text-red-400 relative z-10">42,391.00</span>
+                                            <span class="text-fin-mute relative z-10">0.88</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Current Price Divider -->
+                                    <div class="py-2 px-3 bg-fin-light/30 border-y border-fin-border/60 flex items-center justify-center gap-2">
+                                        <span class="text-emerald-400 text-sm font-bold font-mono">42,389.00</span>
+                                        <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                                    </div>
+
+                                    <!-- Bids (Buys) -->
+                                    <div class="flex-1 overflow-hidden p-2 space-y-1">
+                                        <div class="flex justify-between text-xs font-mono relative">
+                                            <div class="absolute inset-0 bg-emerald-500/10 w-[50%] ml-auto rounded-sm"></div>
+                                            <span class="text-emerald-400 relative z-10">42,388.50</span>
+                                            <span class="text-fin-mute relative z-10">0.92</span>
+                                        </div>
+                                        <div class="flex justify-between text-xs font-mono relative">
+                                            <div class="absolute inset-0 bg-emerald-500/10 w-[80%] ml-auto rounded-sm"></div>
+                                            <span class="text-emerald-400 relative z-10">42,387.00</span>
+                                            <span class="text-fin-mute relative z-10">2.15</span>
+                                        </div>
+                                        <div class="flex justify-between text-xs font-mono relative">
+                                            <div class="absolute inset-0 bg-emerald-500/10 w-[25%] ml-auto rounded-sm"></div>
+                                            <span class="text-emerald-400 relative z-10">42,385.50</span>
+                                            <span class="text-fin-mute relative z-10">0.33</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Execution Panel -->
+                                    <div class="p-3 border-t border-fin-border/60 bg-fin-base/60">
+                                        <div class="flex gap-2 mb-2">
+                                            <button class="flex-1 py-1.5 text-xs font-bold rounded bg-fin-light text-fin-mute hover:bg-fin-border/50 transition-colors">Limit</button>
+                                            <button class="flex-1 py-1.5 text-xs font-bold rounded bg-fin-surface text-white border border-fin-border/50">Market</button>
+                                        </div>
+                                        <button class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded transition-colors shadow-lg shadow-emerald-500/20">
+                                            BUY / LONG
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section id="features" class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal-on-scroll">
+                    <h2 class="text-3xl font-bold mb-4">Institutional-Grade Tools</h2>
+                    <p class="text-fin-mute max-w-2xl mx-auto">Everything you need to analyze price action with precision, stripped of noise and marketing fluff.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="glass-card p-8 rounded-2xl reveal-on-scroll delay-100">
+                        <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center text-blue-400 mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Institutional Charts</h3>
+                        <p class="text-fin-mute text-sm leading-relaxed">
+                            Powered by lightweight charting libraries for millisecond-precision analysis. overlay multi-timeframe structures effortlessly.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="glass-card p-8 rounded-2xl reveal-on-scroll delay-200">
+                        <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center text-emerald-400 mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">SMC Logic Simulator</h3>
+                        <p class="text-fin-mute text-sm leading-relaxed">
+                            Test complex liquidity grabs, order blocks, and fair value gaps (FVG) strategies in a sandbox designed for structure traders.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="glass-card p-8 rounded-2xl reveal-on-scroll delay-300">
+                        <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center text-purple-400 mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Open Access</h3>
+                        <p class="text-fin-mute text-sm leading-relaxed">
+                            No paywalls, no "premium" tiers. Just pure learning. We believe financial literacy is a fundamental right.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-fin-border bg-fin-base pt-16 pb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                    <div class="flex items-center gap-2 mb-4 md:mb-0">
+                         <div class="w-6 h-6 rounded bg-emerald-600 flex items-center justify-center text-fin-base font-bold text-xs">OA</div>
+                        <span class="font-bold text-lg text-white">OpenFin Analytics</span>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-fin-mute hover:text-emerald-400 text-sm transition-colors">Privacy</a>
+                        <a href="#" class="text-fin-mute hover:text-emerald-400 text-sm transition-colors">Terms</a>
+                        <a href="#" class="text-fin-mute hover:text-emerald-400 text-sm transition-colors">GitHub</a>
+                    </div>
+                </div>
+                <div class="text-center md:text-left text-xs text-fin-mute border-t border-fin-border/30 pt-8">
+                    <p>&copy; 2025 OpenFin Analytics. A Non-Commercial Educational Initiative.</p>
+                    <p class="mt-2 opacity-60">This platform is for educational purposes only and does not constitute financial advice.</p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Toast Notification Element -->
+    <div id="toast">You've been added to the beta waitlist!</div>
+
+    <!-- Logic Scripts -->
+    <script>
+        // --- Interactions ---
+
+        function showToast() {
+            var toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        function scrollToMission() {
+            document.getElementById('mission').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard() {
+            // Mock functionality for the Join Beta button
+            showToast();
+        }
+
+        // --- Intersection Observer for Fade Up Animations ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // --- Canvas Background Animation ---
+        const canvas = document.getElementById('chartCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        
+        // Resize handling
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initParticles();
+        }
+
+        // Particle Class representing "Market Nodes"
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(16, 185, 129, 0.15)'; // Emerald tint
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.min(Math.floor(width * 0.05), 60); // Responsive count
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw connections
+            ctx.strokeStyle = 'rgba(51, 65, 85, 0.1)'; // Slate-border color
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Connect particles if close
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+
+    </script>
 </body>
 </html>
