@@ -144,30 +144,24 @@
     <!-- Navigation -->
     <nav class="fixed w-full z-40 top-0 left-0 border-b border-fin-border/30 glass-panel">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="relative flex justify-between items-center h-16">
                 <!-- Logo -->
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-fin-base font-bold text-lg">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                    </div>
+                <div class="flex items-center gap-1">
                     <span class="font-bold text-xl tracking-tight text-white">OpenFin <span class="text-fin-accent font-medium">Analytics</span></span>
                 </div>
                 
                 <!-- Desktop Nav Items -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#mission" class="text-sm font-medium text-fin-mute hover:text-white transition-colors">Mission</a>
-                    <a href="#features" class="text-sm font-medium text-fin-mute hover:text-white transition-colors">Technology</a>
-                    <a href="#" class="text-sm font-medium text-fin-mute hover:text-white transition-colors">Community</a>
+                <div class="hidden md:flex items-center space-x-8 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <a href="#mission" class="group flex items-center space-x-2 text-sm font-medium text-fin-mute hover:text-white transition-colors">
+                        <span>Mission</span>
+                    </a>
+                    <a href="#features" class="group flex items-center space-x-2 text-sm font-medium text-fin-mute hover:text-white transition-colors">
+                        <span>Technology</span>
+                    </a>
                 </div>
 
-                <!-- CTA Mini -->
+                <!-- CTA Mini (Removed) -->
                 <div class="hidden md:block">
-                    <button onclick="copyToClipboard()" class="text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded border border-fin-border hover:border-fin-accent text-fin-mute hover:text-fin-accent transition-all duration-300">
-                        Join Beta
-                    </button>
                 </div>
             </div>
         </div>
@@ -188,27 +182,25 @@
                 </div>
                 
                 <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
-                    Democratizing <br/>
-                    <span class="text-gradient-accent">Professional Trading</span> Education
+                    In Development: <br/>
+                    <span class="text-gradient-accent">The Future of Trading</span> Education
                 </h1>
                 
                 <p class="mt-4 text-xl text-fin-mute max-w-2xl mx-auto mb-10 font-light leading-relaxed">
                     A 100% free, non-commercial sandbox for mastering Smart Money Concepts. 
-                    Backtest institutional strategies in a risk-free environment.
+                    Currently in active development to democratize institutional analysis.
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <button onclick="showToast()" class="group relative px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg shadow-lg shadow-emerald-500/20 transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
-                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></div>
+                    <a href="#" class="cursor-default group relative px-8 py-4 bg-fin-light border border-fin-border text-fin-mute font-semibold rounded-lg transition-all duration-300 flex items-center justify-center">
                         <span class="relative flex items-center gap-2">
-                            Platform Launching Soon
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                            Platform Launching Q4 2026
                         </span>
-                    </button>
+                    </a>
                     
-                    <button onclick="scrollToMission()" class="px-8 py-4 bg-transparent border border-fin-border text-fin-mute hover:text-white hover:border-white rounded-lg transition-all duration-300 font-medium">
-                        Learn About Our Mission
-                    </button>
+                    <a href="#mission" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg shadow-lg shadow-emerald-500/20 transition-all duration-300 font-medium flex items-center justify-center">
+                        Read Our Mission
+                    </a>
                 </div>
 
                 <!-- Detailed Terminal UI Preview Mockup -->
@@ -222,8 +214,8 @@
                             <div class="w-3 h-3 rounded-full bg-emerald-500/80 hover:bg-emerald-400 transition-colors"></div>
                         </div>
                         <div class="text-[10px] tracking-widest text-fin-mute font-mono uppercase opacity-50 flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                            OpenFin Terminal v1.0.4
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                            OpenFin Dev Build v0.1.0
                         </div>
                     </div>
 
@@ -257,8 +249,9 @@
                                             <span class="text-[10px] px-1.5 py-0.5 rounded bg-fin-light text-fin-mute border border-fin-border/50">PERP</span>
                                         </div>
                                         <div class="flex items-center gap-2 text-xs">
-                                            <span class="text-emerald-400 font-mono font-medium">$42,389.00</span>
-                                            <span class="text-emerald-500/80 text-[10px]">+2.45%</span>
+                                            <!-- Updated Initial Value -->
+                                            <span id="ticker-price" class="text-emerald-400 font-mono font-medium">$86,423.50</span>
+                                            <span class="text-emerald-500/80 text-[10px]">+5.12%</span>
                                         </div>
                                     </div>
                                     <div class="hidden sm:flex h-8 w-px bg-fin-border/60"></div>
@@ -280,45 +273,30 @@
 
                             <div class="flex-1 flex min-h-0">
                                 <!-- Chart Area -->
-                                <div class="flex-1 relative bg-gradient-to-b from-transparent to-fin-base/30">
+                                <div class="flex-1 relative bg-fin-base/20">
                                     <!-- Grid Background -->
-                                    <div class="absolute inset-0 z-0 opacity-20" 
-                                         style="background-image: linear-gradient(rgba(51, 65, 85, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(51, 65, 85, 0.5) 1px, transparent 1px); background-size: 40px 40px;">
+                                    <div class="absolute inset-0 z-0 opacity-10" 
+                                         style="background-image: linear-gradient(rgba(148, 163, 184, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.2) 1px, transparent 1px); background-size: 50px 50px;">
                                     </div>
 
-                                    <!-- Chart SVG -->
-                                    <svg class="absolute inset-0 w-full h-full z-10 p-4" viewBox="0 0 800 400" preserveAspectRatio="none">
-                                        <defs>
-                                            <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stop-color="#10b981" stop-opacity="0.25"/>
-                                                <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
-                                            </linearGradient>
-                                            <filter id="glow">
-                                                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-                                                <feMerge>
-                                                    <feMergeNode in="coloredBlur"/>
-                                                    <feMergeNode in="SourceGraphic"/>
-                                                </feMerge>
-                                            </filter>
-                                        </defs>
-                                        <!-- Area Fill -->
-                                        <path d="M0 350 L 0 250 Q 100 280, 200 200 T 400 150 T 600 100 T 800 50 V 400 H 0 Z" fill="url(#chartFill)" stroke="none"/>
-                                        <!-- Line -->
-                                        <path d="M0 250 Q 100 280, 200 200 T 400 150 T 600 100 T 800 50" fill="none" stroke="#10b981" stroke-width="2" filter="url(#glow)"/>
-                                        
-                                        <!-- Price Point Indicator -->
-                                        <circle cx="800" cy="50" r="4" fill="#10b981" class="animate-pulse"/>
-                                        <line x1="0" y1="50" x2="800" y2="50" stroke="#10b981" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.3"/>
-                                    </svg>
+                                    <!-- Live Chart Canvas -->
+                                    <canvas id="liveChart" class="absolute inset-0 w-full h-full z-10"></canvas>
 
                                     <!-- Floating Info Badge inside chart -->
-                                    <div class="absolute top-6 left-6 z-20 bg-fin-base/90 border border-fin-border/60 p-3 rounded-lg backdrop-blur-md shadow-xl">
+                                    <div class="absolute top-6 left-6 z-20 bg-fin-base/90 border border-fin-border/60 p-3 rounded-lg backdrop-blur-md shadow-xl transition-all duration-300">
                                         <div class="flex items-center gap-2 mb-1">
-                                            <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
                                             <span class="text-[10px] text-fin-mute uppercase font-semibold">Long Position</span>
                                         </div>
-                                        <div class="text-lg font-bold text-white font-mono">Entry: $41,200</div>
-                                        <div class="text-xs text-emerald-400 font-mono">PnL: +$1,189.00</div>
+                                        <!-- Updated Entry Price -->
+                                        <div class="text-lg font-bold text-white font-mono">Entry: $84,150</div>
+                                        <!-- Added ID for live updates -->
+                                        <div id="pnl-display" class="text-xs text-emerald-400 font-mono transition-colors duration-300">PnL: +$2,273.50</div>
+                                    </div>
+                                    
+                                    <!-- Crosshair Price Label (Simulated) -->
+                                    <div id="current-price-label" class="absolute right-0 top-1/2 -translate-y-1/2 bg-emerald-600 text-white text-[10px] font-mono px-1 py-0.5 rounded-l z-20 hidden">
+                                        86,423.50
                                     </div>
                                 </div>
 
@@ -330,52 +308,52 @@
                                         <span>Size</span>
                                     </div>
                                     
-                                    <!-- Asks (Sells) -->
-                                    <div class="flex-1 overflow-hidden p-2 space-y-1">
-                                        <div class="flex justify-between text-xs font-mono relative">
-                                            <div class="absolute inset-0 bg-red-500/10 w-[30%] ml-auto rounded-sm"></div>
-                                            <span class="text-red-400 relative z-10">42,395.50</span>
-                                            <span class="text-fin-mute relative z-10">0.45</span>
+                                    <!-- Asks (Sells) - Updated Prices -->
+                                    <div id="order-book-asks" class="flex-1 overflow-hidden p-2 space-y-1 flex flex-col justify-end">
+                                        <div class="flex justify-between text-xs font-mono relative group h-5 items-center">
+                                            <div class="absolute inset-y-0 right-0 bg-red-500/10 w-[30%] rounded-sm transition-all duration-700 ease-in-out"></div>
+                                            <span class="text-red-400 relative z-10 price">86,435.50</span>
+                                            <span class="text-fin-mute relative z-10 size">0.45</span>
                                         </div>
-                                        <div class="flex justify-between text-xs font-mono relative">
-                                            <div class="absolute inset-0 bg-red-500/10 w-[60%] ml-auto rounded-sm"></div>
-                                            <span class="text-red-400 relative z-10">42,394.00</span>
-                                            <span class="text-fin-mute relative z-10">1.20</span>
+                                        <div class="flex justify-between text-xs font-mono relative group h-5 items-center">
+                                            <div class="absolute inset-y-0 right-0 bg-red-500/10 w-[60%] rounded-sm transition-all duration-700 ease-in-out"></div>
+                                            <span class="text-red-400 relative z-10 price">86,432.00</span>
+                                            <span class="text-fin-mute relative z-10 size">1.20</span>
                                         </div>
-                                        <div class="flex justify-between text-xs font-mono relative">
-                                            <div class="absolute inset-0 bg-red-500/10 w-[20%] ml-auto rounded-sm"></div>
-                                            <span class="text-red-400 relative z-10">42,392.50</span>
-                                            <span class="text-fin-mute relative z-10">0.15</span>
+                                        <div class="flex justify-between text-xs font-mono relative group h-5 items-center">
+                                            <div class="absolute inset-y-0 right-0 bg-red-500/10 w-[20%] rounded-sm transition-all duration-700 ease-in-out"></div>
+                                            <span class="text-red-400 relative z-10 price">86,429.50</span>
+                                            <span class="text-fin-mute relative z-10 size">0.15</span>
                                         </div>
-                                        <div class="flex justify-between text-xs font-mono relative">
-                                            <div class="absolute inset-0 bg-red-500/10 w-[45%] ml-auto rounded-sm"></div>
-                                            <span class="text-red-400 relative z-10">42,391.00</span>
-                                            <span class="text-fin-mute relative z-10">0.88</span>
+                                        <div class="flex justify-between text-xs font-mono relative group h-5 items-center">
+                                            <div class="absolute inset-y-0 right-0 bg-red-500/10 w-[45%] rounded-sm transition-all duration-700 ease-in-out"></div>
+                                            <span class="text-red-400 relative z-10 price">86,426.00</span>
+                                            <span class="text-fin-mute relative z-10 size">0.88</span>
                                         </div>
                                     </div>
 
-                                    <!-- Current Price Divider -->
-                                    <div class="py-2 px-3 bg-fin-light/30 border-y border-fin-border/60 flex items-center justify-center gap-2">
-                                        <span class="text-emerald-400 text-sm font-bold font-mono">42,389.00</span>
-                                        <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                                    <!-- Current Price Divider - Updated Price -->
+                                    <div class="py-2 px-3 bg-fin-light/30 border-y border-fin-border/60 flex items-center justify-center gap-2 transition-colors duration-300" id="mid-price-container">
+                                        <span id="mid-price" class="text-emerald-400 text-sm font-bold font-mono">86,423.50</span>
+                                        <svg id="trend-arrow" class="w-3 h-3 text-emerald-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
                                     </div>
 
-                                    <!-- Bids (Buys) -->
-                                    <div class="flex-1 overflow-hidden p-2 space-y-1">
-                                        <div class="flex justify-between text-xs font-mono relative">
-                                            <div class="absolute inset-0 bg-emerald-500/10 w-[50%] ml-auto rounded-sm"></div>
-                                            <span class="text-emerald-400 relative z-10">42,388.50</span>
-                                            <span class="text-fin-mute relative z-10">0.92</span>
+                                    <!-- Bids (Buys) - Updated Prices -->
+                                    <div id="order-book-bids" class="flex-1 overflow-hidden p-2 space-y-1">
+                                        <div class="flex justify-between text-xs font-mono relative group h-5 items-center">
+                                            <div class="absolute inset-y-0 right-0 bg-emerald-500/10 w-[50%] rounded-sm transition-all duration-700 ease-in-out"></div>
+                                            <span class="text-emerald-400 relative z-10 price">86,421.50</span>
+                                            <span class="text-fin-mute relative z-10 size">0.92</span>
                                         </div>
-                                        <div class="flex justify-between text-xs font-mono relative">
-                                            <div class="absolute inset-0 bg-emerald-500/10 w-[80%] ml-auto rounded-sm"></div>
-                                            <span class="text-emerald-400 relative z-10">42,387.00</span>
-                                            <span class="text-fin-mute relative z-10">2.15</span>
+                                        <div class="flex justify-between text-xs font-mono relative group h-5 items-center">
+                                            <div class="absolute inset-y-0 right-0 bg-emerald-500/10 w-[80%] rounded-sm transition-all duration-700 ease-in-out"></div>
+                                            <span class="text-emerald-400 relative z-10 price">86,418.00</span>
+                                            <span class="text-fin-mute relative z-10 size">2.15</span>
                                         </div>
-                                        <div class="flex justify-between text-xs font-mono relative">
-                                            <div class="absolute inset-0 bg-emerald-500/10 w-[25%] ml-auto rounded-sm"></div>
-                                            <span class="text-emerald-400 relative z-10">42,385.50</span>
-                                            <span class="text-fin-mute relative z-10">0.33</span>
+                                        <div class="flex justify-between text-xs font-mono relative group h-5 items-center">
+                                            <div class="absolute inset-y-0 right-0 bg-emerald-500/10 w-[25%] rounded-sm transition-all duration-700 ease-in-out"></div>
+                                            <span class="text-emerald-400 relative z-10 price">86,415.50</span>
+                                            <span class="text-fin-mute relative z-10 size">0.33</span>
                                         </div>
                                     </div>
 
@@ -397,12 +375,69 @@
             </div>
         </section>
 
+        <!-- Mission Section -->
+        <section id="mission" class="py-24 bg-fin-surface relative border-y border-fin-border/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div class="reveal-on-scroll">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                            Financial Knowledge <br>
+                            <span class="text-emerald-400">Should Be Open Source.</span>
+                        </h2>
+                        <div class="space-y-6 text-fin-mute text-lg leading-relaxed">
+                            <p>
+                                In a world of expensive courses and "guru" paywalls, OpenFin Analytics stands apart. We believe that access to professional-grade market analysis tools shouldn't depend on your bank balance.
+                            </p>
+                            <p>
+                                Built by a collective of data scientists and traders, our platform is purely educational. We provide the data, the tools, and the logic. You bring the curiosity.
+                            </p>
+                            <ul class="space-y-3 mt-4">
+                                <li class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-white">Strictly Non-Commercial</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    </div>
+                                    <span class="text-white">Open Data Standards</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="relative reveal-on-scroll delay-200">
+                        <div class="absolute inset-0 bg-emerald-500/10 blur-3xl rounded-full"></div>
+                        <div class="relative grid grid-cols-2 gap-4">
+                            <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center h-48">
+                                <span class="text-4xl font-bold text-white mb-2">100%</span>
+                                <span class="text-sm text-fin-mute uppercase tracking-widest">Free Forever</span>
+                            </div>
+                            <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center h-48 mt-8">
+                                <span class="text-4xl font-bold text-white mb-2">Zero</span>
+                                <span class="text-sm text-fin-mute uppercase tracking-widest">Ads or Upsells</span>
+                            </div>
+                            <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center h-48 -mt-8">
+                                <span class="text-3xl font-bold text-white mb-2">Active</span>
+                                <span class="text-sm text-fin-mute uppercase tracking-widest">Development Phase</span>
+                            </div>
+                            <div class="glass-card p-6 rounded-xl flex flex-col items-center justify-center text-center h-48">
+                                <span class="text-4xl font-bold text-white mb-2">SMC</span>
+                                <span class="text-sm text-fin-mute uppercase tracking-widest">Logic Engine</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Features Grid -->
         <section id="features" class="py-24 relative">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16 reveal-on-scroll">
-                    <h2 class="text-3xl font-bold mb-4">Institutional-Grade Tools</h2>
-                    <p class="text-fin-mute max-w-2xl mx-auto">Everything you need to analyze price action with precision, stripped of noise and marketing fluff.</p>
+                    <h2 class="text-3xl font-bold mb-4">What We Are Building</h2>
+                    <p class="text-fin-mute max-w-2xl mx-auto">We are engineering the tools you need to analyze price action with precision, stripped of noise and marketing fluff.</p>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
@@ -448,6 +483,37 @@
             </div>
         </section>
 
+        <!-- Community / Join Section (Chapter 03) -->
+        <section id="community" class="py-24 relative bg-fin-base/50 border-t border-fin-border/30">
+            <div class="max-w-4xl mx-auto px-4 text-center reveal-on-scroll">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">Development Status</h2>
+                <p class="text-fin-mute text-lg mb-10 max-w-2xl mx-auto">
+                    We are currently in the pre-alpha phase. If you are an educator or developer interested in contributing to the mission, get in touch.
+                </p>
+                
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                    <a href="mailto:contact.openfin@gmail.com" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold transition-all w-full md:w-auto shadow-lg shadow-emerald-500/20">
+                        Contact Developer
+                    </a>
+                    <div class="h-px w-12 bg-fin-border md:hidden"></div>
+                    <div class="flex items-center gap-4 text-fin-mute">
+                        <div class="text-right">
+                            <div class="text-xs uppercase tracking-wide">Current Version</div>
+                            <div class="text-white font-mono">v0.1.0-alpha</div>
+                        </div>
+                        <div class="w-px h-8 bg-fin-border"></div>
+                        <div class="text-left">
+                            <div class="text-xs uppercase tracking-wide">Status</div>
+                            <div class="text-amber-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                                Pre-Alpha
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="border-t border-fin-border bg-fin-base pt-16 pb-8">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -457,9 +523,7 @@
                         <span class="font-bold text-lg text-white">OpenFin Analytics</span>
                     </div>
                     <div class="flex space-x-6">
-                        <a href="#" class="text-fin-mute hover:text-emerald-400 text-sm transition-colors">Privacy</a>
-                        <a href="#" class="text-fin-mute hover:text-emerald-400 text-sm transition-colors">Terms</a>
-                        <a href="#" class="text-fin-mute hover:text-emerald-400 text-sm transition-colors">GitHub</a>
+                        <a href="https://github.com/MarekFX554/OpenFin-Analytics" target="_blank" class="text-fin-mute hover:text-emerald-400 text-sm transition-colors">GitHub</a>
                     </div>
                 </div>
                 <div class="text-center md:text-left text-xs text-fin-mute border-t border-fin-border/30 pt-8">
@@ -601,6 +665,244 @@
         window.addEventListener('resize', resize);
         resize();
         animate();
+
+        // --- Live Candlestick Chart Engine ---
+        (function() {
+            const liveCanvas = document.getElementById('liveChart');
+            if (!liveCanvas) return;
+            
+            const ctxLive = liveCanvas.getContext('2d');
+            const tickerPriceEl = document.getElementById('ticker-price');
+            const midPriceEl = document.getElementById('mid-price');
+            const pnlDisplayEl = document.getElementById('pnl-display');
+            const arrowEl = document.getElementById('trend-arrow');
+            const priceLabelEl = document.getElementById('current-price-label');
+            
+            // Candle Data Structure
+            let candles = [];
+            const maxCandles = 50;
+            const candleWidth = 12;
+            const candleGap = 6;
+            
+            // Simulation State - Updated to 83k-90k range
+            let currentPrice = 86423.50;
+            const entryPrice = 84150.00; // Good entry point for long
+            let targetPrice = 86423.50;
+            let tickTimer = 0;
+            let currentCandle = {
+                open: currentPrice,
+                high: currentPrice,
+                low: currentPrice,
+                close: currentPrice,
+                timestamp: Date.now()
+            };
+            
+            // Initialize History with mock candles
+            let tempPrice = currentPrice;
+            for(let i=0; i<30; i++) {
+                let open = tempPrice - (Math.random() - 0.5) * 80; // Slightly higher volatility for higher price
+                let close = tempPrice;
+                let high = Math.max(open, close) + Math.random() * 40;
+                let low = Math.min(open, close) - Math.random() * 40;
+                candles.unshift({ open, high, low, close });
+                tempPrice = open; // work backwards
+            }
+
+            function resizeLiveChart() {
+                liveCanvas.width = liveCanvas.offsetWidth;
+                liveCanvas.height = liveCanvas.offsetHeight;
+            }
+            window.addEventListener('resize', resizeLiveChart);
+            resizeLiveChart();
+
+            // Helper: Linear Interpolation for smooth price movement
+            const lerp = (start, end, factor) => start + (end - start) * factor;
+
+            // Helper: Format Currency
+            const formatUSD = (num) => '$' + num.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            // 1. Chart Render Loop
+            function animateChart() {
+                const w = liveCanvas.width;
+                const h = liveCanvas.height;
+                
+                // ADJUSTMENT: Increased lerp factor from 0.02 to 0.05 for slightly snappier movement
+                currentPrice = lerp(currentPrice, targetPrice, 0.05);
+                
+                // Update Current Candle Stats (Live)
+                currentCandle.close = currentPrice;
+                currentCandle.high = Math.max(currentCandle.high, currentPrice);
+                currentCandle.low = Math.min(currentCandle.low, currentPrice);
+
+                // Clear Canvas
+                ctxLive.clearRect(0, 0, w, h);
+
+                // Determine Scale Y
+                // Find min/max of visible candles + current candle
+                let allHighs = candles.map(c => c.high).concat([currentCandle.high]);
+                let allLows = candles.map(c => c.low).concat([currentCandle.low]);
+                
+                let minPrice = Math.min(...allLows);
+                let maxPrice = Math.max(...allHighs);
+                let padding = (maxPrice - minPrice) * 0.2; // Add padding top/bottom
+                
+                minPrice -= padding;
+                maxPrice += padding;
+                const range = maxPrice - minPrice;
+
+                // Coordinate Mapping
+                const getY = (price) => h - ((price - minPrice) / range) * h;
+                const getX = (index) => w - 50 - (index * (candleWidth + candleGap)); // Draw from right to left
+
+                // Draw Current Candle (The Live One)
+                drawCandle(ctxLive, currentCandle, getX(0), getY);
+                
+                // Draw Current Price Line
+                const currentY = getY(currentPrice);
+                ctxLive.beginPath();
+                ctxLive.strokeStyle = currentPrice >= currentCandle.open ? '#10b981' : '#ef4444'; // Green or Red line
+                ctxLive.setLineDash([4, 4]);
+                ctxLive.moveTo(0, currentY);
+                ctxLive.lineTo(w, currentY);
+                ctxLive.stroke();
+                ctxLive.setLineDash([]);
+
+                // Draw History Candles
+                for(let i = 0; i < candles.length; i++) {
+                    const x = getX(i + 1); // Shift by 1 because 0 is current candle
+                    if (x < -20) break; // Optimization
+                    drawCandle(ctxLive, candles[candles.length - 1 - i], x, getY);
+                }
+
+                // Update DOM text
+                tickerPriceEl.innerText = formatUSD(currentPrice);
+                midPriceEl.innerText = currentPrice.toFixed(2);
+                
+                // PnL Update
+                const pnl = (currentPrice - entryPrice) * 1; 
+                pnlDisplayEl.innerText = `PnL: ${pnl >= 0 ? '+' : ''}${formatUSD(pnl)}`;
+                pnlDisplayEl.className = `text-xs font-mono transition-colors duration-300 ${pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`;
+
+                // Arrow & Color Update
+                if (currentPrice >= currentCandle.open) {
+                        arrowEl.style.transform = 'rotate(0deg)';
+                        arrowEl.classList.replace('text-red-400', 'text-emerald-400');
+                        midPriceEl.classList.replace('text-red-400', 'text-emerald-400');
+                        priceLabelEl.classList.replace('bg-red-600', 'bg-emerald-600');
+                } else {
+                        arrowEl.style.transform = 'rotate(180deg)';
+                        arrowEl.classList.replace('text-emerald-400', 'text-red-400');
+                        midPriceEl.classList.replace('text-emerald-400', 'text-red-400');
+                        priceLabelEl.classList.replace('bg-emerald-600', 'bg-red-600');
+                }
+
+                // Update Price Label Position
+                priceLabelEl.style.display = 'block';
+                priceLabelEl.style.top = `${currentY}px`;
+                priceLabelEl.innerText = currentPrice.toFixed(2);
+
+                requestAnimationFrame(animateChart);
+            }
+
+            function drawCandle(ctx, c, x, getY) {
+                const isBullish = c.close >= c.open;
+                const color = isBullish ? '#10b981' : '#ef4444'; // Emerald / Red
+                
+                const yOpen = getY(c.open);
+                const yClose = getY(c.close);
+                const yHigh = getY(c.high);
+                const yLow = getY(c.low);
+
+                // Wick
+                ctx.beginPath();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1;
+                ctx.moveTo(x + candleWidth/2, yHigh);
+                ctx.lineTo(x + candleWidth/2, yLow);
+                ctx.stroke();
+
+                // Body
+                ctx.fillStyle = color;
+                // If doji (open == close), draw a thin line
+                let height = Math.abs(yClose - yOpen);
+                if (height < 1) height = 1;
+                
+                ctx.fillRect(x, Math.min(yOpen, yClose), candleWidth, height);
+            }
+
+            // 2. Data Update Loop (Simulate Ticks & Candle Close)
+            // ADJUSTMENT: Changed interval from 750ms to 250ms (faster ticks)
+            setInterval(() => {
+                // Random walk
+                // ADJUSTMENT: Increased volatility from 15 to 20
+                const volatility = 20; 
+                const change = (Math.random() - 0.5) * volatility;
+                targetPrice += change;
+                
+                // Keep visually bound between 83k and 90k
+                if (targetPrice < 83000) targetPrice += 50;
+                if (targetPrice > 90000) targetPrice -= 50;
+
+                // Candle closing logic
+                tickTimer++;
+                // ADJUSTMENT: Adjusted threshold to close candle every 20 ticks (approx 5 seconds)
+                if (tickTimer > 20) { 
+                    // Push current candle to history
+                    candles.push({...currentCandle}); // Copy
+                    if(candles.length > maxCandles) candles.shift();
+
+                    // Start new candle
+                    const nextOpen = currentCandle.close;
+                    currentCandle = {
+                        open: nextOpen,
+                        high: nextOpen,
+                        low: nextOpen,
+                        close: nextOpen,
+                        timestamp: Date.now()
+                    };
+                    tickTimer = 0;
+                }
+
+            }, 250); // Tick speed (Faster, engaging rhythm)
+
+            // 3. Order Book Animation (Slow & Smooth)
+            function animateOrderBook() {
+                const asks = document.getElementById('order-book-asks').children;
+                const bids = document.getElementById('order-book-bids').children;
+                
+                const updateRow = (row) => {
+                    const bar = row.querySelector('div');
+                    const sizeSpan = row.querySelector('.size');
+                    
+                    // Smooth width transition via CSS transition (already in style, we just set width)
+                    const newWidth = Math.floor(Math.random() * 70) + 10; 
+                    bar.style.width = `${newWidth}%`;
+                    
+                    // Small chance to update size number
+                    if (Math.random() > 0.6) {
+                        const newSize = (Math.random() * 5).toFixed(2);
+                        sizeSpan.innerText = newSize;
+                        
+                        // Subtle flash
+                        sizeSpan.style.opacity = 0.5;
+                        setTimeout(() => sizeSpan.style.opacity = 1, 300);
+                    }
+                };
+
+                // Update 1-2 random rows per tick, not all, to be smoother
+                const rAsk = Math.floor(Math.random() * asks.length);
+                const rBid = Math.floor(Math.random() * bids.length);
+                
+                updateRow(asks[rAsk]);
+                updateRow(bids[rBid]);
+            }
+            
+            // ADJUSTMENT: Sped up order book updates from 2000ms to 1000ms
+            setInterval(animateOrderBook, 1000);
+
+            // Start Animation
+            animateChart();
+        })();
 
     </script>
 </body>
